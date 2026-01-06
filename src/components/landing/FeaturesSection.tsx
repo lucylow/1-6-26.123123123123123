@@ -72,7 +72,7 @@ export const FeaturesSection = () => {
             <Sparkles className="w-4 h-4 mr-2" />
             POWERFUL FEATURES
           </Badge>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-4 tracking-tight">
             Everything You Need to{" "}
             <span className="gradient-text">Win</span>
           </h2>
@@ -98,8 +98,8 @@ export const FeaturesSection = () => {
                 className="group"
               >
                 <div
-                  className={`glass-card h-full p-6 lg:p-8 transition-all duration-500 
-                    hover:-translate-y-2 ${colors.glow} hover:border-${feature.color}/50`}
+                  className={`glow-card h-full p-6 lg:p-8 transition-all duration-500 
+                    hover:-translate-y-2 ${colors.glow}`}
                 >
                   {/* Icon */}
                   <div
@@ -111,7 +111,7 @@ export const FeaturesSection = () => {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl lg:text-2xl font-bold mb-3">
+                  <h3 className="text-xl lg:text-2xl font-bold font-display mb-3">
                     {feature.title}
                   </h3>
                   <p className="text-muted-foreground mb-6 leading-relaxed">
