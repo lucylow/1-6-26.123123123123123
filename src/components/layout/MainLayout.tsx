@@ -13,11 +13,43 @@ import {
   X,
   Bell,
   ChevronRight,
+  AlertTriangle,
+  TrendingUp,
+  CheckCircle,
+  Info,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
+const mockNotifications = [
+  { id: '1', type: 'warning', title: 'Eco Round Win Rate Low', time: '2 min ago', read: false },
+  { id: '2', type: 'success', title: 'OXY achieved 5 clutches today', time: '15 min ago', read: false },
+  { id: '3', type: 'info', title: 'Match analysis ready: vs Team Beta', time: '1 hour ago', read: false },
+  { id: '4', type: 'improvement', title: 'A-Site executes improved 15%', time: '2 hours ago', read: true },
+  { id: '5', type: 'warning', title: 'SMOKE utility usage declining', time: '3 hours ago', read: true },
+];
+
+const notificationIcons = {
+  warning: AlertTriangle,
+  success: CheckCircle,
+  info: Info,
+  improvement: TrendingUp,
+};
+
+const notificationColors = {
+  warning: 'text-warning',
+  success: 'text-success',
+  info: 'text-info',
+  improvement: 'text-accent',
+};
 
 const menuItems = [
   { text: 'Dashboard', icon: LayoutDashboard, path: '/app' },
@@ -35,7 +67,18 @@ interface MainLayoutProps {
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [notifications, setNotifications] = useState(mockNotifications);
   const location = useLocation();
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  const markAllRead = () => {
+    setNotifications(notifications.map(n => ({ ...n, read: true })));
+  };
+
+  const markAsRead = (id: string) => {
+    setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n));
+  };
 
   const currentPage = menuItems.find((item) => 
     location.pathname === item.path || 
@@ -233,12 +276,61 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <Badge className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-xs">
-                3
-              </Badge>
-            </Button>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell className="h-5 w-5" />
+                  {unreadCount > 0 && (
+                    <Badge className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center">
+                      {unreadCount}
+                    </Badge>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-0" align="end">
+                <div className="flex items-center justify-between border-b border-border p-3">
+                  <h4 className="font-semibold">Notifications</h4>
+                  {unreadCount > 0 && (
+                    <Button variant="ghost" size="sm" className="text-xs h-7" onClick={markAllRead}>
+                      Mark all read
+                    </Button>
+                  )}
+                </div>
+                <ScrollArea className="h-[300px]">
+                  {notifications.length === 0 ? (
+                    <p className="p-4 text-center text-sm text-muted-foreground">No notifications</p>
+                  ) : (
+                    <div className="divide-y divide-border">
+                      {notifications.map((notification) => {
+                        const Icon = notificationIcons[notification.type as keyof typeof notificationIcons] || Info;
+                        const colorClass = notificationColors[notification.type as keyof typeof notificationColors] || 'text-muted-foreground';
+                        return (
+                          <button
+                            key={notification.id}
+                            onClick={() => markAsRead(notification.id)}
+                            className={cn(
+                              "flex items-start gap-3 w-full p-3 text-left hover:bg-muted/50 transition-colors",
+                              !notification.read && "bg-primary/5"
+                            )}
+                          >
+                            <Icon className={cn("h-5 w-5 mt-0.5 shrink-0", colorClass)} />
+                            <div className="flex-1 min-w-0">
+                              <p className={cn("text-sm", !notification.read && "font-medium")}>
+                                {notification.title}
+                              </p>
+                              <p className="text-xs text-muted-foreground mt-0.5">{notification.time}</p>
+                            </div>
+                            {!notification.read && (
+                              <div className="h-2 w-2 rounded-full bg-primary shrink-0 mt-1.5" />
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </ScrollArea>
+              </PopoverContent>
+            </Popover>
 
             <div className="flex items-center gap-3">
               <Avatar className="h-9 w-9">
