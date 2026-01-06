@@ -103,7 +103,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-6"
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display leading-[1.1] mb-6 tracking-tight"
             >
               The AI-Powered{" "}
               <span className="gradient-text">Esports Coaching</span>{" "}
@@ -114,7 +114,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0"
+              className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
               Transform raw match data into winning strategies with our comprehensive 
               assistant coach platform. Powered by GRID data and HY-Motion 1.0.
@@ -160,10 +160,10 @@ export const HeroSection = () => {
                 { value: "24/7", label: "AI Coaching" },
               ].map((stat, index) => (
                 <div key={index} className="text-center lg:text-left">
-                  <div className="text-2xl md:text-3xl font-black gradient-text">
+                  <div className="text-2xl md:text-3xl font-bold font-display gradient-text">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
                 </div>
               ))}
             </motion.div>

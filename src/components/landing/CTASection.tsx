@@ -57,7 +57,7 @@ export const CTASection = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
 
             <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display mb-4 tracking-tight">
                 Ready to Transform Your{" "}
                 <span className="gradient-text">Coaching?</span>
               </h2>

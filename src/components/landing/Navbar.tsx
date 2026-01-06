@@ -45,10 +45,10 @@ export const Navbar = () => {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center font-black text-lg">
+              <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center font-bold text-lg font-display">
                 AC
               </div>
-              <span className="font-bold text-lg hidden sm:block gradient-text">
+              <span className="font-bold text-lg hidden sm:block font-display gradient-text">
                 AssistantCoach.ai
               </span>
             </div>
