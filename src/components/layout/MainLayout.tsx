@@ -17,6 +17,7 @@ import {
   TrendingUp,
   CheckCircle,
   Info,
+  Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -58,6 +59,7 @@ const menuItems = [
   { text: 'Live Coach', icon: Radio, path: '/app/live' },
   { text: 'Motion Studio', icon: Activity, path: '/app/motion' },
   { text: 'AI Insights', icon: Lightbulb, path: '/app/insights' },
+  { text: 'AI Playground', icon: Sparkles, path: '/app/ai-playground' },
 ];
 
 interface MainLayoutProps {
