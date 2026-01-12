@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { Github, Twitter, Linkedin } from "lucide-react";
 
 const navigation = {
@@ -6,9 +5,9 @@ const navigation = {
   company: ["About", "Blog", "Careers", "Contact"],
 };
 
-export const Footer = forwardRef<HTMLElement>((_, ref) => {
+export const Footer = () => {
   return (
-    <footer ref={ref} className="py-16 border-t border-border/30">
+    <footer className="py-16 border-t border-border/30">
       <div className="container px-4 md:px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
@@ -96,6 +95,4 @@ export const Footer = forwardRef<HTMLElement>((_, ref) => {
       </div>
     </footer>
   );
-});
-
-Footer.displayName = "Footer";
+};
