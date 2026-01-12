@@ -1,13 +1,29 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Menu, X, Github, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Github, ArrowRight, LayoutDashboard, Gamepad2, Users, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "Features", href: "#features" },
   { label: "Demo", href: "#demo" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Tech Stack", href: "#tech-stack" },
+];
+
+const appPages = [
+  { label: "Dashboard", href: "/app", icon: LayoutDashboard, description: "Overview and key metrics" },
+  { label: "Match Analysis", href: "/app/match", icon: Gamepad2, description: "Detailed match breakdowns" },
+  { label: "Player Development", href: "/app/player", icon: Users, description: "Track player progress" },
+  { label: "AI Playground", href: "/app/ai-playground", icon: Sparkles, description: "Interactive AI agent" },
 ];
 
 export const Navbar = () => {
@@ -23,7 +39,14 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const location = useLocation();
+  const isLandingPage = location.pathname === "/";
+
   const scrollToSection = (href: string) => {
+    if (!isLandingPage) {
+      window.location.href = "/" + href;
+      return;
+    }
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: "smooth" });
     setIsMobileMenuOpen(false);
@@ -65,6 +88,39 @@ export const Navbar = () => {
                   {link.label}
                 </button>
               ))}
+              
+              {/* App Pages Dropdown */}
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="bg-transparent hover:bg-muted/50 text-muted-foreground hover:text-foreground">
+                      App
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[320px] gap-1 p-2">
+                        {appPages.map((page) => (
+                          <li key={page.href}>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                to={page.href}
+                                className={cn(
+                                  "flex items-center gap-3 select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                )}
+                              >
+                                <page.icon className="h-5 w-5 text-primary" />
+                                <div>
+                                  <div className="text-sm font-medium">{page.label}</div>
+                                  <p className="text-xs text-muted-foreground">{page.description}</p>
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </div>
 
             {/* Desktop Actions */}
@@ -131,6 +187,21 @@ export const Navbar = () => {
                   {link.label}
                 </button>
               ))}
+              <div className="pt-2 mt-2 border-t border-border/50 space-y-1">
+                <p className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">App Pages</p>
+                {appPages.map((page) => (
+                  <Link
+                    key={page.href}
+                    to={page.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-4 py-3 text-left font-medium text-muted-foreground 
+                      hover:text-foreground transition-colors rounded-lg hover:bg-muted/50"
+                  >
+                    <page.icon className="h-4 w-4 text-primary" />
+                    {page.label}
+                  </Link>
+                ))}
+              </div>
               <div className="pt-2 mt-2 border-t border-border/50 flex flex-col gap-2">
                 <Button
                   variant="outline"
