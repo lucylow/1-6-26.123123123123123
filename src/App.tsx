@@ -12,6 +12,7 @@ import { PlayerDevelopment } from "./pages/PlayerDevelopment";
 import { LiveCoach } from "./pages/LiveCoach";
 import { MotionStudio } from "./pages/MotionStudio";
 import { Insights } from "./pages/Insights";
+import AIPlayground from "./pages/AIPlayground";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/app/live" element={<MainLayout><LiveCoach /></MainLayout>} />
           <Route path="/app/motion" element={<MainLayout><MotionStudio /></MainLayout>} />
           <Route path="/app/insights" element={<MainLayout><Insights /></MainLayout>} />
+          <Route path="/app/ai-playground" element={<MainLayout><AIPlayground /></MainLayout>} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
